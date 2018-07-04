@@ -17,7 +17,7 @@ echo -e '\nexport KUBECONFIG=/etc/kubernetes/admin.conf' >> /root/.bashrc
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 kubectl taint nodes --all node-role.kubernetes.io/master-
 
-apt -y install build-essential binutils gcc make sudo wget htop nethogs tmux
+apt -y install build-essential binutils gcc make openssl sudo wget htop nethogs tmux
 apt -y install postgresql postgresql-contrib libpq-dev postgresql-client postgresql-client-common
 sudo -Hiu postgres psql -c "CREATE USER airflow PASSWORD 'airflow';"
 sudo -Hiu postgres psql -c "CREATE DATABASE airflow;"
@@ -25,7 +25,13 @@ sudo -Hiu postgres psql -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public 
 sudo -Hiu postgres psql -c "CREATE USER morphl PASSWORD 'morphl';"
 sudo -Hiu postgres psql -c "CREATE DATABASE morphl;"
 sudo -Hiu postgres psql -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO morphl;"
-newusers /opt/orchestrator/bootstrap/runasroot/newusers.txt
+
+AIRFLOW_PASSWORD=$(openssl rand -base64 32 | sha512sum | cut -c1-20)
+MORPHL_PASSWORD=$(openssl rand -base64 32 | sha512sum | cut -c1-20)
+echo "airflow:${AIRFLOW_PASSWORD}::::/home/airflow:/bin/bash" > /tmp/newusers.txt
+echo "morphl:${MORPHL_PASSWORD}::::/home/morphl:/bin/bash" >> /tmp/newusers.txt
+newusers /tmp/newusers.txt
+rm /tmp/newusers.txt
 usermod -aG sudo airflow
 usermod -aG sudo morphl
 echo "airflow ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
