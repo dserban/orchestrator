@@ -7,6 +7,10 @@ docker run -d --name registry --restart=always    \
            -v /var/lib/registry:/var/lib/registry \
            registry:2
 
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" > /etc/apt/sources.list.d/kubernetes.list
+apt update -qq && apt -y install kubelet kubeadm kubectl
+
 apt -y install build-essential binutils gcc make sudo wget htop nethogs tmux
 apt -y install postgresql postgresql-contrib libpq-dev postgresql-client postgresql-client-common
 sudo -Hiu postgres psql -c "CREATE USER airflow PASSWORD 'airflow';"
