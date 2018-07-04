@@ -1,4 +1,4 @@
-Deployment Orchestrator
+**Deployment Instructions**
 
 On a clean Ubuntu 16.04 machine, bootstrap the installation by running the following commands as root:
 ```
