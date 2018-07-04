@@ -34,8 +34,8 @@ newusers /tmp/newusers.txt
 rm /tmp/newusers.txt
 usermod -aG sudo airflow
 usermod -aG sudo morphl
-echo "airflow ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-echo "morphl ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+# echo "airflow ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+# echo "morphl ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 echo "export AIRFLOW_HOME=/home/airflow/airflow" > /etc/profile.d/airflow.sh
 echo "export PATH=/opt/anaconda/bin:\$PATH" >> /etc/profile.d/airflow.sh
 mkdir /opt/anaconda /opt/tmp
