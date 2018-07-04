@@ -1,4 +1,13 @@
-apt -y install docker.io build-essential binutils gcc make sudo curl wget htop nethogs tmux
+apt -y install docker.io
+echo 'DOCKER_OPTS="--insecure-registry localhost:5000"' > /etc/default/docker
+service docker restart
+docker pull registry:2
+docker run -d --name registry --restart=always    \
+           -p 127.0.0.1:5000:5000                 \
+           -v /var/lib/registry:/var/lib/registry \
+           registry:2
+
+apt -y install build-essential binutils gcc make sudo curl wget htop nethogs tmux
 apt -y install postgresql postgresql-contrib libpq-dev postgresql-client postgresql-client-common
 sudo -Hiu postgres psql -c "CREATE USER airflow PASSWORD 'airflow';"
 sudo -Hiu postgres psql -c "CREATE DATABASE airflow;"
