@@ -1,10 +1,10 @@
 apt -y install docker.io apt-transport-https curl
 export DOCKER_REGISTRY_IP=$(ip route get 8.8.8.8 | awk '{print $NF; exit}')
-echo DOCKER_OPTS="--insecure-registry $DOCKER_REGISTRY_IP:5000" > /etc/default/docker
+echo DOCKER_OPTS="--insecure-registry ${DOCKER_REGISTRY_IP}:5000" > /etc/default/docker
 service docker restart
 docker pull registry:2
 docker run -d --name registry --restart=always    \
-           -p 127.0.0.1:5000:5000                 \
+           -p ${DOCKER_REGISTRY_IP}:5000:5000     \
            -v /var/lib/registry:/var/lib/registry \
            registry:2
 
