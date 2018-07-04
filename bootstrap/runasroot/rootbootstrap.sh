@@ -1,10 +1,9 @@
 apt -y install docker.io apt-transport-https curl
-export DOCKER_REGISTRY_IP=$(ip route get 8.8.8.8 | awk '{print $NF; exit}')
-echo DOCKER_OPTS="--insecure-registry ${DOCKER_REGISTRY_IP}:5000" > /etc/default/docker
+echo 'DOCKER_OPTS="--insecure-registry localhost:5000"' > /etc/default/docker
 service docker restart
 docker pull registry:2
 docker run -d --name registry --restart=always    \
-           -p ${DOCKER_REGISTRY_IP}:5000:5000     \
+           -p localhost:5000:5000     \
            -v /var/lib/registry:/var/lib/registry \
            registry:2
 
@@ -16,8 +15,9 @@ kubeadm init --pod-network-cidr=10.244.0.0/16
 export KUBECONFIG=/etc/kubernetes/admin.conf
 echo -e '\nexport KUBECONFIG=/etc/kubernetes/admin.conf' >> /root/.bashrc
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+kubectl taint nodes --all node-role.kubernetes.io/master-
 kubectl get nodes
-sleep 10
+sleep 20
 kubectl get nodes
 
 apt -y install build-essential binutils gcc make sudo wget htop nethogs tmux
