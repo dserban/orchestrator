@@ -3,7 +3,7 @@ echo 'DOCKER_OPTS="--insecure-registry localhost:5000"' > /etc/default/docker
 service docker restart
 docker pull registry:2
 docker run -d --name registry --restart=always    \
-           -p localhost:5000:5000     \
+           -p 127.0.0.1:5000:5000     \
            -v /var/lib/registry:/var/lib/registry \
            registry:2
 
