@@ -16,9 +16,6 @@ export KUBECONFIG=/etc/kubernetes/admin.conf
 echo -e '\nexport KUBECONFIG=/etc/kubernetes/admin.conf' >> /root/.bashrc
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 kubectl taint nodes --all node-role.kubernetes.io/master-
-kubectl get nodes
-sleep 20
-kubectl get nodes
 
 apt -y install build-essential binutils gcc make sudo wget htop nethogs tmux
 apt -y install postgresql postgresql-contrib libpq-dev postgresql-client postgresql-client-common
