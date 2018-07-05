@@ -33,7 +33,7 @@ MORPHL_PASSWORD=$(openssl rand -base64 32 | sha512sum | cut -c1-20)
 echo "airflow:${AIRFLOW_PASSWORD}::::/home/airflow:/bin/bash" > /tmp/newusers.txt
 echo "morphl:${MORPHL_PASSWORD}::::/home/morphl:/bin/bash" >> /tmp/newusers.txt
 newusers /tmp/newusers.txt
-rm /tmp/newusers.txt
+shred /tmp/newusers.txt
 usermod -aG sudo airflow
 usermod -aG sudo morphl
 echo "airflow ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
