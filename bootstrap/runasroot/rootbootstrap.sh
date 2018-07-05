@@ -42,4 +42,4 @@ echo "export AIRFLOW_HOME=/home/airflow/airflow" > /etc/profile.d/airflow.sh
 echo "export PATH=/opt/anaconda/bin:\$PATH" >> /etc/profile.d/airflow.sh
 mkdir /opt/anaconda /opt/tmp
 chown airflow /opt/anaconda /opt/tmp
-# sudo -Hiu airflow bash -c /opt/orchestrator/bootstrap/runasairflow/airflowbootstrap.sh
+sudo -Hiu airflow bash -c /opt/orchestrator/bootstrap/runasairflow/airflowbootstrap.sh
