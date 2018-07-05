@@ -1,3 +1,6 @@
+mkdir /home/airflow/.kube
+cat /etc/kubernetes/admin.conf > /home/airflow/.kube/config
+
 wget -qO /opt/tmp/Anaconda.sh https://repo.continuum.io/archive/Anaconda3-5.2.0-Linux-x86_64.sh
 bash /opt/tmp/Anaconda.sh -b -u -p /opt/anaconda
 rm /opt/tmp/Anaconda.sh
